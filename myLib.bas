@@ -10,7 +10,7 @@
         Replace_symbols = txt
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function VBA_Start() As String
+    Sub VBA_Start()
     With Application
         .ScreenUpdating = False
         .EnableEvents = False
@@ -18,9 +18,9 @@
         '.DisplayPageBreaks = False
         .DisplayAlerts = False
     End With
-    End Function
+    End Sub
     '---------------------------------------------------------------------------------------------------------
-    Function VBA_End() As String
+    Sub VBA_End()
     With Application
         .ScreenUpdating = True
         .Calculation = xlCalculationAutomatic
@@ -28,9 +28,9 @@
         .DisplayStatusBar = True
         .DisplayAlerts = True
     End With
-    End Function
+    End Sub
     '---------------------------------------------------------------------------------------------------------
-    Function CreateSh(cr_sh As String) As String
+    Sub CreateSh(cr_sh As String)
     For Each Sh In ThisWorkbook.Worksheets
         If Sh.Name = cr_sh Then
         chek_name = 1
@@ -56,7 +56,7 @@
     OpenFile = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function openFileCSV(ByRef patch As String)
+    Sub openFileCSV(ByRef patch As String)
     Dim result$
     If Dir(patch) = "" Then
         MsgBox ("FileNotFound")
@@ -68,12 +68,12 @@
 
         
     End If
-    End Function
+    End Sub
     '---------------------------------------------------------------------------------------------------------
-    Function quartal(month&) As String
+    Function getQuartal(num_month&) As String
     Dim result As String
     result = Empty
-            Select Case month
+            Select Case num_month
             Case 1, 2, 3
             result = "1Q"
             Case 4, 5, 6
@@ -83,36 +83,36 @@
             Case 10, 11, 12
             result = "4Q"
         End Select
-    quartal = result
+    getQuartal = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function month_form_00(month As Integer) As String
+    Function getMonth_form_00(num_month As Integer) As String
     Dim result As String
     result = Empty
 
-        If month < 10 Then
-            result = "0" & month
+        If num_month < 10 Then
+            result = "0" & num_month
         Else
-            result = month
+            result = num_month
         End If
 
-    month_form_00 = result
+    getMonth_form_00 = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function patch_history_TR(brand As String, year As Integer,  ver_year As Integer, thisMonth As Integer, ver_month As Integer) As String
+    Function getPatchHistTR(nmBrand As String, ThisYear As Integer,  VarYear As Integer, ThisMonth As Integer, VarMonth As Integer) As String
     Dim result As String
     result = Empty
-    month00 = month_form_00(ver_month)
+    month00 = getMonth_form_00(VarMonth)
 
-    If ver_month = 12 Then
-        result = "p:\DPP\Business development\Book commercial\" & brand & "\Top Russia Total " & ver_year & " " & brand & ".xlsm"
-        ElseIf ver_month & ver_year = thisMonth & year Then
-            result = "p:\DPP\Business development\Book commercial\" & brand & "\Top Russia Total " & ver_year & " " & brand & ".xlsm"
+    If VarMonth = 12 Then
+        result = "p:\DPP\Business development\Book commercial\" & nmBrand & "\Top Russia Total " & VarYear & " " & nmBrand & ".xlsm"
+        ElseIf VarMonth & VarYear = ThisMonth & ThisYear Then
+            result = "p:\DPP\Business development\Book commercial\" & nmBrand & "\Top Russia Total " & VarYear & " " & nmBrand & ".xlsm"
             Else
-                result = "p:\DPP\Business development\Book commercial\" & brand & "\" & ver_year & "\History " & ver_year & "\Top Russia Total " & ver_year & "." & month00 & " " & brand & ".xlsm"
+                result = "p:\DPP\Business development\Book commercial\" & nmBrand & "\" & VarYear & "\History " & VarYear & "\Top Russia Total " & VarYear & "." & month00 & " " & nmBrand & ".xlsm"
     End If
 
-    patch_history_TR = result
+    getPatchHistTR = result
     End Function
     '---------------------------------------------------------------------------------------------------------
     Function getLastRow() As Integer
@@ -135,7 +135,7 @@
     getLastColumn = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function clnt_type(in_data$, i&)
+    Function getClntType(in_data$, i&) as String
     Dim result
     Dim ar_type_clients(1 To 4, 1 To 12)
     Dim f_sl&
@@ -212,10 +212,10 @@
     End If
     Next f_sl
 
-    clnt_type = result
+    getClntType = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function getMregWhitoutBrand$(in_data$)
+    Function getMregWhitoutBrand(in_data$) as String
     Dim result$
     Dim ar_nmBran()
     If Mid(in_data, 3, 1) = " " Then
@@ -227,7 +227,7 @@
     End Function
 
     '---------------------------------------------------------------------------------------------------------
-    Function mreg_ext$(in_data_mreg$, in_data_reg$)
+    Function getMregExt(in_data_mreg$, in_data_reg$) as String
     Dim result$
     Dim extPos&
     textPos = 0
@@ -242,10 +242,10 @@
     Else
         result = in_data_mreg
     End If
-    mreg_ext = result
+    getMregExt = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function mreg_lat(in_data_mreg As String) As String
+    Function getMregLat(in_data_mreg As String) As String
     Dim result$
     Dim f_mr&
     Dim ar_nmMregEN(), ar_nmMregLT()
@@ -260,19 +260,19 @@
         End If
     Next f_mr
 
-    mreg_lat = result
+    getMregLat = result
 
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function salon_name$(in_sln_nm$, in_sln_addres$, in_city$)
+    Function getSalonName(in_sln_nm$, in_sln_addres$, in_city$) as String
     Dim result$
 
     result = Trim(Replace_symbols(Left(in_sln_nm, 30) & ". " & Left(in_sln_addres, 50) & " " & Left(in_city, 50)))
 
-    salon_name = result
+    getSalonName = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function mont_num&(in_data$)
+    Function getMonthNumeric(in_data$) as Integer
     Dim result&
     Dim f_m&, num_month&
 
@@ -285,7 +285,7 @@
         End If
         Next f_m
     
-    mont_num = result
+    getMonthNumeric= result
     End Function
     '----------------------------------------
     Function getNameMonthEN(in_data%) As String
@@ -305,7 +305,7 @@
     End Function
 
     '---------------------------------------------------------------------------------------------------------
-    Function month_eng$(month$)
+    Function getMonthEng(month$) as String
     Dim result$
     Dim f_m&
 
@@ -319,19 +319,19 @@
             End If
         Next f_m
         
-    month_eng = result
+    getMonthEng = result
     End Function
 
     '---------------------------------------------------------------------------------------------------------
-    Function getYearType(in_act_year&, in_data&, i&) As Variant
+    Function getYearType(ThisYear&, in_data&, i&) As Variant
     Dim result1&, result2$
         
         If Len(in_data) = 4 Then result1 = in_data Else result1 = 2008
         
             Select Case result1
-                Case in_act_year
+                Case ThisYear
                     result2 = "TY"
-                Case in_act_year - 1
+                Case ThisYear - 1
                     result2 = "PY"
                 Case Else
                     result2 = "PPY"
@@ -348,7 +348,7 @@
     End Function
     '---------------------------------------------------------------------------------------------------------
 
-    Function mag(in_min_price As Long, in_max_price As Long, in_place As Long, mag_type As String) As Variant
+    Function getMag(in_min_price As Long, in_max_price As Long, in_place As Long, mag_type As String) As Variant
 
     Dim result As Variant
     Dim mag_avg_price&
@@ -422,10 +422,10 @@
 
         End Select
         
-    mag = result
+    getMag = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function type_business$(in_brand$)
+    Function getTypeBusiness(in_brand$) as String
     Dim result$
     Select Case in_brand
             Case "LP", "MX", "KR", "RD"
@@ -435,10 +435,10 @@
             Case "DE", "CR"
             result = "Skin"
     End Select
-    type_business = result
+    getTypeBusiness = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function type_active_DN$(in_data&)
+    Function getTypeDN(in_data&) as String
     Dim result$
 
     Select Case in_data
@@ -447,27 +447,27 @@
         Case 0
             result = "Closed"
     End Select
-    type_active_DN = result
+    getTypeDN = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function rnd_num&(in_data)
+    Function getRoundNum(in_data as Variant) as Double 
     Dim result&
     If IsNumeric(in_data) And Len(in_data) > 0 Then
         result = Round(in_data, 0)
     Else
         result = 0
     End If
-    rnd_num = result
+    getRoundNum = result
     End Function
     '---------------------------------------------------------------------------------------------------------
-    Function num2num0&(in_data As Variant)
+    Function getNum2num0&(in_data As Variant) as Double
     Dim result&
     If Len(in_data) > 0 And IsNumeric(in_data) Then
     result = in_data
     Else
     result = 0
     End If
-    num2num0 = result
+    getNum2num0 = result
     End Function
     '---------------------------------------------------------------------------------------------------------
     Function num2numNull(in_data) As Variant
@@ -482,7 +482,7 @@
     '---------------------------------------------------------------------------------------------------------
     Function getNmChainTop$(inNmChain$, inCdChain&, inNmTypeClnt$)
     Dim result$
-    If Left(inCdChain, 2) = "92" And clnt_type(inNmTypeClnt, 4) = "chain" Then
+    If Left(inCdChain, 2) = "92" And getClntType(inNmTypeClnt, 4) = "chain" Then
     result = inNmChain
     Else
     result = Empty
@@ -599,7 +599,7 @@
 
     Select Case in_month
         Case Is <= in_thisMonth
-            val = num2num0(Cells(in_row, clm + in_month - 1))
+            val = getNum2num0(Cells(in_row, clm + in_month - 1))
             If val = 0 Then val = Empty Else val = val / 1000
         Case Else
             val = Empty
