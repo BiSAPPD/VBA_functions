@@ -42,7 +42,7 @@ Next Sh
     End If
 End Function
 
-Function OpenFile(ByRef patch As String, nm_sh As String, Optional stMessage as Boolean = t) As String
+Function OpenFile(ByRef patch As String, nm_sh As String, Optional stMessage as Boolean = True) As String
 Dim result$
 
     If Dir(patch) = "" Then
@@ -140,57 +140,57 @@ Dim result
 Dim ar_type_clients(1 To 4, 1 To 12)
 Dim f_sl&
 
-    ar_type_clients(1, 1) = "СЃР°Р»РѕРЅ"
+    ar_type_clients(1, 1) = "салон"
     ar_type_clients(2, 1) = "salon"
     ar_type_clients(3, 1) = "salon"
     ar_type_clients(4, 1) = "single"
 
-    ar_type_clients(1, 2) = "СЃРµС‚СЊ СЃР°Р»РѕРЅРѕРІ"
+    ar_type_clients(1, 2) = "сеть салонов"
     ar_type_clients(2, 2) = "chain_salons"
     ar_type_clients(3, 2) = "salon"
     ar_type_clients(4, 2) = "chain"
 
-    ar_type_clients(1, 3) = "С‡/Рј"
+    ar_type_clients(1, 3) = "ч/м"
     ar_type_clients(2, 3) = "hdres"
     ar_type_clients(3, 3) = "salon"
     ar_type_clients(4, 3) = "single"
 
-    ar_type_clients(1, 4) = "СЃРµС‚СЊ РјР°РіР°Р·РёРЅРѕРІ"
+    ar_type_clients(1, 4) = "сеть магазинов"
     ar_type_clients(2, 4) = "chain_shops"
     ar_type_clients(3, 4) = "shop"
     ar_type_clients(4, 4) = "chain"
 
-    ar_type_clients(1, 5) = "РјР°РіР°Р·РёРЅ"
+    ar_type_clients(1, 5) = "магазин"
     ar_type_clients(2, 5) = "shop"
     ar_type_clients(3, 5) = "shop"
     ar_type_clients(4, 5) = "single"
 
-    ar_type_clients(1, 6) = "СЃР°Р»РѕРЅ-РјР°Рі."
+    ar_type_clients(1, 6) = "салон-маг."
     ar_type_clients(2, 6) = "salon"
     ar_type_clients(3, 6) = "salon"
     ar_type_clients(4, 6) = "single"
 
-    ar_type_clients(1, 7) = "(РїСѓСЃС‚Рѕ)"
+    ar_type_clients(1, 7) = "(пусто)"
     ar_type_clients(2, 7) = "other"
     ar_type_clients(3, 7) = "other"
     ar_type_clients(4, 7) = "single"
 
-    ar_type_clients(1, 8) = "С€РєРѕР»Р°"
+    ar_type_clients(1, 8) = "школа"
     ar_type_clients(2, 8) = "school"
     ar_type_clients(3, 8) = "school"
     ar_type_clients(4, 8) = "single"
 
-    ar_type_clients(1, 9) = "РґСЂСѓРіРѕРµ"
+    ar_type_clients(1, 9) = "другое"
     ar_type_clients(2, 9) = "other"
     ar_type_clients(3, 9) = "other"
     ar_type_clients(4, 9) = "single"
 
-    ar_type_clients(1, 10) = "РЅРµР№Р»-Р±Р°СЂ"
+    ar_type_clients(1, 10) = "нейл-бар"
     ar_type_clients(2, 10) = "nails_bar"
     ar_type_clients(3, 10) = "nails"
     ar_type_clients(4, 10) = "single"
 
-    ar_type_clients(1, 11) = "СЃРµС‚СЊ РЅРµР№Р»-Р±Р°СЂРѕРІ"
+    ar_type_clients(1, 11) = "сеть нейл-баров"
     ar_type_clients(2, 11) = "chain_nails"
     ar_type_clients(3, 11) = "nails"
     ar_type_clients(4, 11) = "chain"
@@ -219,7 +219,7 @@ Dim result$
 Dim ar_nmBran()
 Select Case in_data 
         Case Empty: result = Empty
-        Case Else: result = IIf(Len(in_data) > 3 and Mid(in_data, 3, 1) = " ", Right(in_data, Len(in_data) - 3), in_data)
+        Case Else: If Len(in_data) > 3 and Mid(in_data, 3, 1) = " " Then result = Right(in_data, Len(in_data) - 3) else result =  in_data
 End Select
 GetMregWhitoutBrand = result
 End Function
@@ -274,7 +274,7 @@ Function GetMonthNumeric(in_data$) as Integer
 Dim result&
 Dim f_m&, num_month&
 
-ar_nm_month_qnc_rus = Array("СЏРЅРІР°СЂСЊ", "С„РµРІСЂР°Р»СЊ", "РјР°СЂС‚", "Р°РїСЂРµР»СЊ", "РјР°Р№", "РёСЋРЅСЊ", "РёСЋР»СЊ", "Р°РІРіСѓСЃС‚", "СЃРµРЅС‚СЏР±СЂСЊ", "РѕРєС‚СЏР±СЂСЊ", "РЅРѕСЏР±СЂСЊ", "РґРµРєР°Р±СЂСЊ")
+ar_nm_month_qnc_rus = Array("январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь")
 result = 1
     For f_m = 0 To 11
     If ar_nm_month_qnc_rus(f_m) = in_data Then
@@ -307,7 +307,7 @@ Function GetMonthEng(month$) as String
 Dim result$
 Dim f_m&
 
-ar_month_rus = Array("СЏРЅРІР°СЂСЊ", "С„РµРІСЂР°Р»СЊ", "РјР°СЂС‚", "Р°РїСЂРµР»СЊ", "РјР°Р№", "РёСЋРЅСЊ", "РёСЋР»СЊ", "Р°РІРіСѓСЃС‚", "СЃРµРЅС‚СЏР±СЂСЊ", "РѕРєС‚СЏР±СЂСЊ", "РЅРѕСЏР±СЂСЊ", "РґРµРєР°Р±СЂСЊ")
+ar_month_rus = Array("январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь")
 ar_month_eng = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
     For f_m = 0 To 11
@@ -322,25 +322,21 @@ End Function
 
 
 Function GetYearType(ThisYear as Integer, in_data as Integer, i&) As Variant
-Dim result1&, result2$
+Dim result1&, result2$, result3$
     
     If in_data => 2008 And in_data <= ThisYear Then result1 = in_data Else result1 = 2008
     
     
         Select Case result1
-            Case ThisYear
-                result2 = "TY"
-            Case ThisYear - 1
-                result2 = "PY"
-            Case Else
-                result2 = "PPY"
+            Case ThisYear: result2 = "TY": result3 = "CNQ_TY"
+            Case ThisYear - 1: result2 = "PY": result3 = "CNQ_PY"
+            Case Else: result2 = "PPY": result3 = "PPY"
         End Select
 
 Select Case i
-Case 1
-    GetYearType = result1
-Case 2
-    GetYearType = result2
+Case 1: GetYearType = result1
+Case 2: GetYearType = result2
+Case 3: GetYearType = result3
 Case Else
     GetYearType = Empty
 End Select
@@ -644,7 +640,7 @@ Function GetSREP_type(nm_Srep$, nm_FLSM$) as String
 Dim result$
 If Trim(LCase(nm_Srep)) = Trim(LCase(nm_FLSM)) Then
     result = "FLSMasSREP"
-    ElseIf InStr(1, LCase(nm_Srep), "РІР°РєР°РЅ", vbTextCompare) <> 0 Then
+    ElseIf InStr(1, LCase(nm_Srep), "вакан", vbTextCompare) <> 0 Then
         result = "vacancy"
         Else
         result = "active"
@@ -737,9 +733,9 @@ End Function
 Function GetStatus(in_data As String) As String
 Dim result$
 Select Case Trim(LCase(in_data))
-    Case "РїР°СЂС‚РЅРµСЂ", "РїР°СЂС‚РЅС‘СЂ", "partner": result = "partner"
-    Case "Р»РѕСЂРµР°Р»СЊ", "loreal", "l'oreal", "Р»'РѕСЂРµР°Р»СЊ", "Р·Р°Рѕ Р»'РѕСЂРµР°Р»СЊ": result = "loreal"
-    Case "ancore", "ancor", "Р°РЅРєРѕСЂ", "inter", "Р°РіРµРЅС‚СЃС‚РІРѕ": result = "inter"
+    Case "партнер", "партнёр", "partner": result = "partner"
+    Case "лореаль", "loreal", "l'oreal", "л'ореаль", "зао л'ореаль": result = "loreal"
+    Case "ancore", "ancor", "анкор", "inter", "агентство": result = "inter"
     Case Else: result = in_data
 End Select
 GetStatus = result
