@@ -467,7 +467,7 @@ End If
 GetNum2num0 = result
 End Function
 
-Function num2numNull(in_data) As Variant
+Function GetNum2numNull(in_data) As Variant
 Dim result As Variant
 If Len(in_data) > 0 And in_data <> 0 Then
 result = in_data
@@ -544,7 +544,7 @@ End Select
 GetLTM = result
 End Function
 
-Function GetVectoreEV$(in_data#)
+Function GetVectoreEV(in_data as Double) as String
 Dim result$
 
 If IsNumeric(in_data) Then
@@ -824,8 +824,12 @@ End Function
 
 Public Function getNumInThrousend(ByVal in_data As Double) As Double
     Dim result As Double
-If IsNumeric(in_data) And in_data <> 0 Then result = in_data / 1000
-getNumInThrousend = result
+    If IsNumeric(in_data) And in_data <> 0 Then 
+        result = in_data / 1000
+    Else
+        result = vbNullString
+    End If
+    getNumInThrousend = result
 End Function
 
 Public Function getUniversCode(brand As String, row As Long, cd_Univers As Variant) As Variant
