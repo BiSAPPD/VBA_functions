@@ -1,15 +1,32 @@
- Attribute VB_Name = "myLib"
+Attribute VB_Name = "myLib"
+Private Declare PtrSafe Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
+'
+' The state of the Ctrl key
+Function CtrlKey() As Boolean
+    CtrlKey = (GetAsyncKeyState(vbKeyControl) And &H8000)
+End Function
+'
+' The state of either Shift keys
+Function ShiftKey() As Boolean
+    ShiftKey = (GetAsyncKeyState(vbKeyShift) And &H8000)
+End Function
+'
+' The state of the Alt key
+Function AltKey() As Boolean
+    AltKey = (GetAsyncKeyState(vbKeyMenu) And &H8000)
+End Function
+'
 
 
 
 
-Function Replace_symbols(ByVal txt As String) As String
+Function Replace_symbols(ByVal Txt As String) As String
     St$ = "~!@/\#$%^:?&*=|`;"""
     For f_i% = 1 To Len(St$)
-        txt = Replace(txt, Mid(St$, f_i, 1), "_")
-        txt = Replace(txt, Chr(10), "_")
+        Txt = Replace(Txt, Mid(St$, f_i, 1), "_")
+        Txt = Replace(Txt, Chr(10), "_")
     Next
-    Replace_symbols = txt
+    Replace_symbols = Txt
 End Function
 
 Sub VBA_Start()
@@ -101,14 +118,14 @@ result = Empty
 GetMonth_form_00 = result
 End Function
 
-Function GetPatchHistTR(nmBrand As String, ThisYear As Integer, VarYear As Integer, thisMonth As Integer, VarMonth As Integer) As String
+Function GetPatchHistTR(nmBrand As String, ThisYear As Integer, VarYear As Integer, ThisMonth As Integer, VarMonth As Integer) As String
 Dim result As String
 result = Empty
 month00 = GetMonth_form_00(VarMonth)
 
 If VarMonth = 12 Then
     result = "p:\DPP\Business development\Book commercial\" & nmBrand & "\Top Russia Total " & VarYear & " " & nmBrand & ".xlsm"
-    ElseIf VarMonth & VarYear = thisMonth & ThisYear Then
+    ElseIf VarMonth & VarYear = ThisMonth & ThisYear Then
         result = "p:\DPP\Business development\Book commercial\" & nmBrand & "\Top Russia Total " & VarYear & " " & nmBrand & ".xlsm"
         Else
             result = "p:\DPP\Business development\Book commercial\" & nmBrand & "\" & VarYear & "\History " & VarYear & "\Top Russia Total " & VarYear & "." & month00 & " " & nmBrand & ".xlsm"
@@ -544,7 +561,7 @@ End Select
 GetLTM = result
 End Function
 
-Function GetVectoreEV(in_data as Double) as String
+Function GetVectoreEV(in_data As Double) As String
 Dim result$
 
 If IsNumeric(in_data) Then
@@ -715,11 +732,11 @@ Sheets(in_sh).Select
 ActiveSheet.UsedRange.Cells.ClearContents
 End Sub
 
-Function GetHash(ByVal txt$) As String
+Function GetHash(ByVal Txt$) As String
     Dim oUTF8, oMD5, abyt, i&, k&, hi&, lo&, chHi$, chLo$
     Set oUTF8 = CreateObject("System.Text.UTF8Encoding")
     Set oMD5 = CreateObject("System.Security.Cryptography.MD5CryptoServiceProvider")
-    abyt = oMD5.ComputeHash_2(oUTF8.GetBytes_4(txt$))
+    abyt = oMD5.ComputeHash_2(oUTF8.GetBytes_4(Txt$))
     For i = 1 To LenB(abyt)
         k = AscB(MidB(abyt, i, 1))
         lo = k Mod 16: hi = (k - lo) / 16
@@ -824,7 +841,7 @@ End Function
 
 Public Function getNumInThrousend(ByVal in_data As Double) As Double
     Dim result As Double
-    If IsNumeric(in_data) And in_data <> 0 Then 
+    If IsNumeric(in_data) And in_data <> 0 Then
         result = in_data / 1000
     Else
         result = vbNullString
@@ -840,4 +857,41 @@ Dim result As Variant
         result = cd_Univers
     End If
 getUniversCode = result
+End Function
+
+Function getResponse(ByVal text As String, request As String, key As String, secret_key As String) As String
+
+    Dim result As String
+    Dim objHTTP As Object
+    
+    result = ""
+    Set objHTTP = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+    
+    With objHTTP
+    Select Case request
+        Case "address"
+            URL = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address"
+            send_txt = Chr(34) & "query" & Chr(34) & ": " & Chr(34) & text & Chr(34) & ", " & Chr(34) & "Count" & Chr(34) & ": 1"
+        
+        Case "fias"
+            URL = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/address"
+            send_txt = Chr(34) & "query" & Chr(34) & ": " & Chr(34) & text & Chr(34)
+    End Select
+        .Open "POST", URL, False
+        .setRequestHeader "Content-Type", "application/json"
+        .setRequestHeader "Accept", "application/json"
+        .setRequestHeader "Authorization", "Token " & key
+        '.setProxy 2, "128.114.0.21:8080", ""
+        .send ("{" & send_txt & "}")
+        
+    End With
+    
+    result = objHTTP.responseText
+    result = Replace(result, "[", "")
+    result = Replace(result, "]", "")
+    
+    If result = "{""suggestions"":}" Then result = "{""suggestions"":null}"
+    
+    getResponse = result
+    
 End Function
