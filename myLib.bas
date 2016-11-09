@@ -491,7 +491,7 @@ result = in_data
 Else
 result = Empty
 End If
-num2numNull = result
+GetNum2numNull = result
 End Function
 
 Function GetNmChainTop(inNmChain$, inCdChain&, inNmTypeClnt$) As String
@@ -505,7 +505,7 @@ GetNmChainTop = result
 End Function
 
 
-Public Function GetLTM(ByRef wks as Worksheet, ByVal in_row as Long, ThisMonth is Integer, typeFN as String) As Variant
+Public Function GetLTM(ByRef wks as Worksheet, ByVal in_row as Long, ThisMonth as Integer, typeFN as String) As Variant
 Dim result$
 Dim f_a&, f_avg&, sum_CA_LTM&, AVG_CA_LTM&, frqOrder&
 Dim MinVal!, MaxVal!
