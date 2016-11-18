@@ -19,9 +19,9 @@ End Function
 
 
 Function Replace_symbols(ByVal Txt As String) As String
-    St$ = "~!@/\#$%^:?&*=|`;"""
-    For f_i% = 1 To Len(St$)
-        Txt = Replace(Txt, Mid(St$, f_i, 1), "_")
+    st$ = "~!@/\#$%^:?&*=|`;"""
+    For f_i% = 1 To Len(st$)
+        Txt = Replace(Txt, Mid(st$, f_i, 1), "_")
         Txt = Replace(Txt, Chr(10), "_")
     Next
     Replace_symbols = Txt
@@ -49,13 +49,13 @@ End Sub
 
 Sub CreateSh(cr_sh As String)
 For Each Sh In ThisWorkbook.Worksheets
-    If Sh.Name = cr_sh Then
+    If Sh.name = cr_sh Then
     chek_name = 1
     End If
 Next Sh
     If chek_name <> 1 Then
     Set Sh = Worksheets.Add()
-    Sh.Name = cr_sh
+    Sh.name = cr_sh
     End If
 End Sub
 
@@ -67,7 +67,7 @@ Dim result$
     Else
         Workbooks.Open Filename:=patch, Notify:=False
         
-        result = ActiveWorkbook.Name
+        result = ActiveWorkbook.name
         Sheets(nm_sh).Select
         ActiveSheet.AutoFilterMode = False
     End If
@@ -669,9 +669,9 @@ End Function
 Sub IsOpenTRtoClsd()
 Dim wbBook As Workbook
 For Each wbBook In Workbooks
-    If wbBook.Name <> ThisWorkbook.Name Then
-        If Windows(wbBook.Name).Visible Then
-            If wbBook.Name Like "Top Russia*" Then wbBook.Close: Exit For
+    If wbBook.name <> ThisWorkbook.name Then
+        If Windows(wbBook.name).Visible Then
+            If wbBook.name Like "Top Russia*" Then wbBook.Close: Exit For
         End If
     End If
 Next wbBook
@@ -679,7 +679,7 @@ End Sub
 
 
 Sub CloseNoMotherBook(ByVal ShIn As String)
-    If ActiveWorkbook.Name <> ShIn Then
+    If ActiveWorkbook.name <> ShIn Then
 
     ActiveWindow.Close
     Application.DisplayAlerts = False
@@ -759,7 +759,7 @@ End Function
 
 Function fixError(in_data As Variant) As Variant
 Dim result As Variant
-If isError(in_data) Then
+If IsError(in_data) Then
 result = Empty
 Else
 result = in_data
@@ -772,7 +772,7 @@ nameOfFile = ""
 With Application.FileDialog(msoFileDialogFilePicker)
     .AllowMultiSelect = False
     .InitialFileName = "*.*"
-    .Title = "Select a file"
+    .title = "Select a file"
     .Show
     If .SelectedItems.Count = 1 Then nameOfFile = .SelectedItems(1)
 End With
@@ -837,12 +837,12 @@ Public Function FileExists(Filepath As String) As Boolean
     FileExists = VBA.Len(VBA.Dir(Filepath)) <> 0
 End Function
 
-Public Function getNumInThrousend(ByVal in_data As Double) As Double
-    Dim result As Double
+Public Function getNumInThrousend(ByVal in_data As Double) As Variant
+    Dim result As Variant
     If IsNumeric(in_data) And in_data <> 0 Then
         result = in_data / 1000
     Else
-        result = vbNullString
+        result = Null
     End If
     getNumInThrousend = result
 End Function
@@ -893,3 +893,11 @@ Function getResponse(ByVal text As String, request As String, key As String, sec
     getResponse = result
     
 End Function
+
+
+Sub letHead(sts_head As Boolean, clmn As Long, name As String)
+If sts_head Then
+    Cells(1, clmn) = name
+End If
+
+End Sub
