@@ -18,12 +18,10 @@ End Function
 '
 
 
-
-
 Function Replace_symbols(ByVal Txt As String) As String
-    St$ = "~!@/\#$%^:?&*=|`;"""
-    For f_i% = 1 To Len(St$)
-        Txt = Replace(Txt, Mid(St$, f_i, 1), "_")
+    st$ = "~!@/\#$%^:?&*=|`;"""
+    For f_i% = 1 To Len(st$)
+        Txt = Replace(Txt, Mid(st$, f_i, 1), "_")
         Txt = Replace(Txt, Chr(10), "_")
     Next
     Replace_symbols = Txt
@@ -51,13 +49,13 @@ End Sub
 
 Sub CreateSh(cr_sh As String)
 For Each Sh In ThisWorkbook.Worksheets
-    If Sh.Name = cr_sh Then
+    If Sh.name = cr_sh Then
     chek_name = 1
     End If
 Next Sh
     If chek_name <> 1 Then
     Set Sh = Worksheets.Add()
-    Sh.Name = cr_sh
+    Sh.name = cr_sh
     End If
 End Sub
 
@@ -69,7 +67,7 @@ Dim result$
     Else
         Workbooks.Open Filename:=patch, Notify:=False
         
-        result = ActiveWorkbook.Name
+        result = ActiveWorkbook.name
         Sheets(nm_sh).Select
         ActiveSheet.AutoFilterMode = False
     End If
@@ -505,24 +503,29 @@ GetNmChainTop = result
 End Function
 
 
-Public Function GetLTM(ByRef wks as Worksheet, ByVal in_row as Long, ThisMonth as Integer, typeFN as String) As Variant
+Public Function GetLTM(ByRef wks As Worksheet, ByVal in_row As Long, ThisMonth As Integer, typeFN As String) As Variant
 Dim result$
 Dim f_a&, f_avg&, sum_CA_LTM&, AVG_CA_LTM&, frqOrder&
 Dim MinVal!, MaxVal!
+Dim ML13 As Variant
 Dim val As Variant
+Dim str_clm As Integer, end_clm As Integer
 
-ar_DataMonthPRTN = Array(66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90)
-ar_nmAVG_Order = Array(2.5, 5, 10, 15, 20, 25, 30, 50, 60, 70, 100000)
+ar_DataMonthPRTN = Array(0, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77)
+ar_nmAVG_Order = Array(2.5, 5, 10, 15, 20, 25, 30, 40, 50, 60, 80, 100, 100000)
 sum_CA_LTM = 0
 frqOrder = 0
-
-For f_a = ThisMonth To ThisMonth + 11
+str_clm = ThisMonth + 12
+end_clm = ThisMonth + 1
+For f_a = str_clm To end_clm Step -1
     val = wks.Cells(in_row, ar_DataMonthPRTN(f_a))
     If IsNumeric(val) And val > 0 Then
-    frqOrder = frqOrder + 1
-    sum_CA_LTM = sum_CA_LTM + val
+        frqOrder = frqOrder + 1
+        sum_CA_LTM = sum_CA_LTM + val
     End If
 Next f_a
+ML13 = wks.Cells(in_row, ar_DataMonthPRTN(end_clm - 1))
+
 AVG_CA_LTM = Round(sum_CA_LTM / 12 / 1000, 1)
 
 Select Case typeFN
@@ -556,7 +559,8 @@ Case "type_avg_ca"
         Case Else
         result = Empty
         End Select
-    
+Case "LostLTM"
+    result = IIf(sum_CA_LTM = 0 And ML13 <> 0, 1, 0)
 End Select
 GetLTM = result
 End Function
@@ -671,9 +675,9 @@ End Function
 Sub IsOpenTRtoClsd()
 Dim wbBook As Workbook
 For Each wbBook In Workbooks
-    If wbBook.Name <> ThisWorkbook.Name Then
-        If Windows(wbBook.Name).Visible Then
-            If wbBook.Name Like "Top Russia*" Then wbBook.Close: Exit For
+    If wbBook.name <> ThisWorkbook.name Then
+        If Windows(wbBook.name).Visible Then
+            If wbBook.name Like "Top Russia*" Then wbBook.Close: Exit For
         End If
     End If
 Next wbBook
@@ -681,7 +685,7 @@ End Sub
 
 
 Sub CloseNoMotherBook(ByVal ShIn As String)
-    If ActiveWorkbook.Name <> ShIn Then
+    If ActiveWorkbook.name <> ShIn Then
 
     ActiveWindow.Close
     Application.DisplayAlerts = False
@@ -761,7 +765,7 @@ End Function
 
 Function fixError(in_data As Variant) As Variant
 Dim result As Variant
-If isError(in_data) Then
+If IsError(in_data) Then
 result = Empty
 Else
 result = in_data
@@ -774,7 +778,7 @@ nameOfFile = ""
 With Application.FileDialog(msoFileDialogFilePicker)
     .AllowMultiSelect = False
     .InitialFileName = "*.*"
-    .Title = "Select a file"
+    .title = "Select a file"
     .Show
     If .SelectedItems.Count = 1 Then nameOfFile = .SelectedItems(1)
 End With
@@ -839,12 +843,12 @@ Public Function FileExists(Filepath As String) As Boolean
     FileExists = VBA.Len(VBA.Dir(Filepath)) <> 0
 End Function
 
-Public Function getNumInThrousend(ByVal in_data As Double) As Double
-    Dim result As Double
+Public Function getNumInThrousend(ByVal in_data As Double) As Variant
+    Dim result As Variant
     If IsNumeric(in_data) And in_data <> 0 Then
         result = in_data / 1000
     Else
-        result = vbNullString
+        result = Null
     End If
     getNumInThrousend = result
 End Function
@@ -895,3 +899,11 @@ Function getResponse(ByVal text As String, request As String, key As String, sec
     getResponse = result
     
 End Function
+
+
+Sub letHead(sts_head As Boolean, clmn As Long, name As String)
+If sts_head Then
+    Cells(1, clmn) = name
+End If
+
+End Sub
