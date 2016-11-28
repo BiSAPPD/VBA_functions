@@ -157,57 +157,57 @@ Dim result
 Dim ar_type_clients(1 To 4, 1 To 12)
 Dim f_sl&
 
-    ar_type_clients(1, 1) = "пїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 1) = "салон"
     ar_type_clients(2, 1) = "salon"
     ar_type_clients(3, 1) = "salon"
     ar_type_clients(4, 1) = "single"
 
-    ar_type_clients(1, 2) = "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 2) = "сеть салонов"
     ar_type_clients(2, 2) = "chain_salons"
     ar_type_clients(3, 2) = "salon"
     ar_type_clients(4, 2) = "chain"
 
-    ar_type_clients(1, 3) = "пїЅ/пїЅ"
+    ar_type_clients(1, 3) = "ч/м"
     ar_type_clients(2, 3) = "hdres"
     ar_type_clients(3, 3) = "salon"
     ar_type_clients(4, 3) = "single"
 
-    ar_type_clients(1, 4) = "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 4) = "сеть магазинов"
     ar_type_clients(2, 4) = "chain_shops"
     ar_type_clients(3, 4) = "shop"
     ar_type_clients(4, 4) = "chain"
 
-    ar_type_clients(1, 5) = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 5) = "магазин"
     ar_type_clients(2, 5) = "shop"
     ar_type_clients(3, 5) = "shop"
     ar_type_clients(4, 5) = "single"
 
-    ar_type_clients(1, 6) = "пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅ."
+    ar_type_clients(1, 6) = "салон-маг."
     ar_type_clients(2, 6) = "salon"
     ar_type_clients(3, 6) = "salon"
     ar_type_clients(4, 6) = "single"
 
-    ar_type_clients(1, 7) = "(пїЅпїЅпїЅпїЅпїЅ)"
+    ar_type_clients(1, 7) = "(пусто)"
     ar_type_clients(2, 7) = "other"
     ar_type_clients(3, 7) = "other"
     ar_type_clients(4, 7) = "single"
 
-    ar_type_clients(1, 8) = "пїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 8) = "школа"
     ar_type_clients(2, 8) = "school"
     ar_type_clients(3, 8) = "school"
     ar_type_clients(4, 8) = "single"
 
-    ar_type_clients(1, 9) = "пїЅпїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 9) = "другое"
     ar_type_clients(2, 9) = "other"
     ar_type_clients(3, 9) = "other"
     ar_type_clients(4, 9) = "single"
 
-    ar_type_clients(1, 10) = "пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅ"
+    ar_type_clients(1, 10) = "нейл-бар"
     ar_type_clients(2, 10) = "nails_bar"
     ar_type_clients(3, 10) = "nails"
     ar_type_clients(4, 10) = "single"
 
-    ar_type_clients(1, 11) = "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ"
+    ar_type_clients(1, 11) = "сеть нейл-баров"
     ar_type_clients(2, 11) = "chain_nails"
     ar_type_clients(3, 11) = "nails"
     ar_type_clients(4, 11) = "chain"
@@ -291,7 +291,7 @@ Function GetMonthNumeric(in_data$) As Integer
 Dim result&
 Dim f_m&, num_month&
 
-ar_nm_month_qnc_rus = Array("пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
+ar_nm_month_qnc_rus = Array("январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь")
 result = 1
     For f_m = 0 To 11
     If ar_nm_month_qnc_rus(f_m) = in_data Then
@@ -324,7 +324,7 @@ Function GetMonthEng(month$) As String
 Dim result$
 Dim f_m&
 
-ar_month_rus = Array("пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
+ar_month_rus = Array("январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь")
 ar_month_eng = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
     For f_m = 0 To 11
@@ -662,7 +662,7 @@ Function GetSREP_type(nm_Srep$, nm_FLSM$) As String
 Dim result$
 If Trim(LCase(nm_Srep)) = Trim(LCase(nm_FLSM)) Then
     result = "FLSMasSREP"
-    ElseIf InStr(1, LCase(nm_Srep), "пїЅпїЅпїЅпїЅпїЅ", vbTextCompare) <> 0 Then
+    ElseIf InStr(1, LCase(nm_Srep), "вакан", vbTextCompare) <> 0 Then
         result = "vacancy"
         Else
         result = "active"
@@ -755,9 +755,9 @@ End Function
 Function GetStatus(in_data As String) As String
 Dim result$
 Select Case Trim(LCase(in_data))
-    Case "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "partner": result = "partner"
-    Case "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "loreal", "l'oreal", "пїЅ'пїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅ пїЅ'пїЅпїЅпїЅпїЅпїЅпїЅ": result = "loreal"
-    Case "ancore", "ancor", "пїЅпїЅпїЅпїЅпїЅ", "inter", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ": result = "inter"
+    Case "партнер", "партнёр", "partner": result = "partner"
+    Case "лореаль", "loreal", "l'oreal", "л'ореаль", "зао л'ореаль": result = "loreal"
+    Case "ancore", "ancor", "анкор", "inter", "агентство": result = "inter"
     Case Else: result = in_data
 End Select
 GetStatus = result
@@ -908,18 +908,6 @@ End If
 
 End Sub
 
-<<<<<<< HEAD
-Declare PtrSafe Function SHCreateDirectoryEx Lib "shell32" Alias "SHCreateDirectoryExA" (ByVal hwnd As Long, ByVal pszPath As String, ByVal psa As Any) As Long
-                                      
-Sub CreateFolderWithSubfolders(ByVal PatchCreateFolder$)
- 
-   If Len(Dir(PatchCreateFolder$, vbDirectory)) = 0 Then
-       SHCreateDirectoryEx Application.hwnd, PatchCreateFolder$, ByVal 0&
-   End If
-End Sub
-
-=======
->>>>>>> newbranch
 Sub OpenInChromeOrDefaultBrowser(ByVal url As String)
 
     Dim wholeContent As String
@@ -943,8 +931,4 @@ Sub OpenInChromeOrDefaultBrowser(ByVal url As String)
         Set Sh = CreateObject("WScript.Shell")
         Sh.Run url
     End If
-<<<<<<< HEAD
 End Sub
-=======
-End Sub
->>>>>>> newbranch
