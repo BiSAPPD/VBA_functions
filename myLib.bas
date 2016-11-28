@@ -907,3 +907,28 @@ If sts_head Then
 End If
 
 End Sub
+
+Sub OpenInChromeOrDefaultBrowser(ByVal url As String)
+
+    Dim wholeContent As String
+    chrome = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+
+    If Dir(chrome, vbNormal) <> "" Then
+        '' 32 bit Chrome
+        wholeContent = """" & chrome & """ -url " & url
+    Else
+        '' 64 bit Chrome
+        chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+        wholeContent = """" & chrome & """ -url " & url
+    End If
+
+    If Dir(chrome, vbNormal) <> "" Then
+        '' Chrome is found, execute
+        Shell wholeContent
+    Else
+        '' Chrome was not found, open url using the default program
+        Dim Sh As Object
+        Set Sh = CreateObject("WScript.Shell")
+        Sh.Run url
+    End If
+End Sub
