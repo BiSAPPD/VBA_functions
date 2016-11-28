@@ -908,6 +908,7 @@ End If
 
 End Sub
 
+<<<<<<< HEAD
 Declare PtrSafe Function SHCreateDirectoryEx Lib "shell32" Alias "SHCreateDirectoryExA" (ByVal hwnd As Long, ByVal pszPath As String, ByVal psa As Any) As Long
                                       
 Sub CreateFolderWithSubfolders(ByVal PatchCreateFolder$)
@@ -917,6 +918,8 @@ Sub CreateFolderWithSubfolders(ByVal PatchCreateFolder$)
    End If
 End Sub
 
+=======
+>>>>>>> newbranch
 Sub OpenInChromeOrDefaultBrowser(ByVal url As String)
 
     Dim wholeContent As String
@@ -940,4 +943,8 @@ Sub OpenInChromeOrDefaultBrowser(ByVal url As String)
         Set Sh = CreateObject("WScript.Shell")
         Sh.Run url
     End If
+<<<<<<< HEAD
 End Sub
+=======
+End Sub
+>>>>>>> newbranch
