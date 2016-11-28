@@ -1,5 +1,7 @@
 Attribute VB_Name = "myLib"
 Private Declare PtrSafe Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
+Declare PtrSafe Function SHCreateDirectoryEx Lib "shell32" Alias "SHCreateDirectoryExA" (ByVal hwnd As Long, ByVal pszPath As String, ByVal psa As Any) As Long
+
 '
 ' The state of the Ctrl key
 Function CtrlKey() As Boolean
@@ -931,4 +933,12 @@ Sub OpenInChromeOrDefaultBrowser(ByVal url As String)
         Set Sh = CreateObject("WScript.Shell")
         Sh.Run url
     End If
+End Sub
+
+                                      
+Sub CreateFolderWithSubfolders(ByVal PatchCreateFolder$)
+ 
+   If Len(Dir(PatchCreateFolder$, vbDirectory)) = 0 Then
+       SHCreateDirectoryEx Application.hwnd, PatchCreateFolder$, ByVal 0&
+   End If
 End Sub
