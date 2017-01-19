@@ -666,8 +666,10 @@ If Trim(LCase(nm_Srep)) = Trim(LCase(nm_FLSM)) Then
     result = "FLSMasSREP"
     ElseIf InStr(1, LCase(nm_Srep), "вакан", vbTextCompare) <> 0 Then
         result = "vacancy"
-        Else
-        result = "active"
+        ElseIf InStr(1, LCase(nm_Srep), "vakan", vbTextCompare) <> 0 Then
+            result = "vacancy"
+            Else
+            result = "active"
 End If
 GetSREP_type = result
 
@@ -942,3 +944,120 @@ Sub CreateFolderWithSubfolders(ByVal PatchCreateFolder$)
        SHCreateDirectoryEx Application.hwnd, PatchCreateFolder$, ByVal 0&
    End If
 End Sub
+
+Option Compare Database
+Option Explicit
+
+Public Function fxVerifyEMail(strEMail As String) As Boolean
+
+Dim strEval As String
+Dim strTemp As String
+
+strTemp = strEMail
+
+If InStr(1, strTemp, "@") Then
+    
+    strEval = Left(strEMail, (InStr(1, strEMail, "@")) - 1)
+    
+    If Len(strEval) < 1 Then
+        fxVerifyEMail = False
+        Exit Function
+    End If
+    
+    strEval = Mid(strTemp, (InStr(1, strTemp, "@")) + 1, Len(strTemp))
+
+    If (Len(strEval) - 1) < 1 Then
+        fxVerifyEMail = False
+        Exit Function
+    End If
+
+    If InStr(1, strEval, ".") Then
+
+        strEval = Mid(strEval, InStr(1, strEval, ".") + 1, Len(strTemp))
+        strEval = Right(strEval, 3)
+    
+        If (Len(strEval)) < 2 Then
+            fxVerifyEMail = False
+            Exit Function
+        End If
+
+    Else
+        
+        fxVerifyEMail = False
+        Exit Function
+    
+    End If
+
+
+Else
+        
+        fxVerifyEMail = False
+        Exit Function
+    
+End If
+    
+fxVerifyEMail = True
+
+
+Exit Function
+
+ErrorTrap:
+
+    fxVerifyEMail = False
+
+End Function
+
+Public Function fxVerifyURL(ByVal strURL As String) As Boolean
+
+Dim Response As Long
+
+Dim FX As Double
+Dim Url As String
+Dim IEDir As String
+
+On Error GoTo ErrorTrap
+
+    IEDir = "C:\Program Files\Internet Explorer"
+    
+    ' the file exists, returns "" (empty string) if the file doesn't exist.
+    
+    If Dir(IEDir & "\iexplore.exe") <> "" Then
+        FX = Shell(IEDir & "\IEXPLORE.EXE " & strURL, 1)
+    Else
+        MsgBox "Explorer was not found in the expected folder!", vbOKOnly, "Error!"
+    End If
+
+    fxVerifyURL = True
+
+ErrorTrap:
+
+    fxVerifyURL = False
+
+End Function
+
+Public Function NumericValidation(ByVal ValueChecked As String, ByVal KeyAscii As Integer)
+
+Dim bYesDecPoint As Boolean
+
+If KeyAscii = 8 Then              '   Backspace
+    NumericValidation = KeyAscii
+    Exit Function
+End If
+If KeyAscii = 47 Then              '   Slash
+    NumericValidation = 0
+    Exit Function
+End If
+If InStr(ValueChecked, ".") > 0 Then bYesDecPoint = True
+If Not (KeyAscii >= 46 And KeyAscii <= 57) Then
+    KeyAscii = 0
+    Beep
+End If
+'If KeyAscii = 46 And bYesDecPoint Then  '   Second Dec. Point
+'    KeyAscii = 0
+'    Beep
+'End If
+NumericValidation = KeyAscii
+
+End Function
+
+
